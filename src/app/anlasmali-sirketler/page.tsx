@@ -349,7 +349,7 @@ export default function PartnersPage() {
                 <div className="flex items-center gap-4 text-xs text-muted-foreground mb-4 pb-4 border-b border-border">
                   <div className="flex items-center gap-1">
                     <CheckCircle className="w-3 h-3" />
-                    <span>Kurulu: {company.established}</span>
+                    <span>Kuruluş: {company.established}</span>
                   </div>
                 </div>
 
