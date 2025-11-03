@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { Resend } from 'resend';
+import nodemailer from 'nodemailer';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -61,21 +61,32 @@ export async function POST(request: NextRequest) {
 
     const topicLabel = topicLabels[topic] || topic;
 
-    // Send email using Resend (initialize at runtime)
+    // Send email using Gmail SMTP with nodemailer
     try {
-      const apiKey = process.env.RESEND_API_KEY;
-      if (!apiKey) {
-        console.warn('RESEND_API_KEY is not set. Skipping email send and returning success.');
+      const gmailUser = process.env.GMAIL_USER;
+      const gmailPassword = process.env.GMAIL_APP_PASSWORD;
+
+      if (!gmailUser || !gmailPassword) {
+        console.warn('Gmail credentials not set. Skipping email send.');
         return NextResponse.json(
           { success: true, message: 'Form alındı. (E-posta gönderimi yapılandırılmadı)' },
           { status: 200 }
         );
       }
 
-      const resend = new Resend(apiKey);
-      await resend.emails.send({
-        from: 'Doğa Danışmanlık <info@dogadanismanlik.com.tr>',
-        to: ['himmlerbaba3131@gmail.com'],
+      // Create transporter
+      const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: gmailUser,
+          pass: gmailPassword,
+        },
+      });
+
+      // Send email
+      await transporter.sendMail({
+        from: `"Doğa Danışmanlık" <${gmailUser}>`,
+        to: gmailUser, // Send to same Gmail address
         subject: `Yeni Danışma Talebi: ${topicLabel}`,
         html: `
           <!DOCTYPE html>
