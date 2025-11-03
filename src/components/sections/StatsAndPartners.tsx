@@ -114,6 +114,8 @@ const partners = [
 ];
 
 export default function StatsAndPartners() {
+  const marqueePartners = [...partners, ...partners];
+
   return (
     <section className="py-12 bg-background border-t border-b border-border">
       <div className="container mx-auto">
@@ -153,48 +155,20 @@ export default function StatsAndPartners() {
 
             {/* Slider container */}
             <div className="flex gap-8 animate-scroll">
-              {[
-                'Allianz',
-                'Aksigorta',
-                'Anadolu',
-                'Ankara',
-                'AXA',
-                'Bereket',
-                'Corpus',
-                'Doğa',
-                'EMAA',
-                'Generali',
-                'GIG',
-                'Groupama',
-                'HDI',
-                'Mapfre',
-                'Neova',
-                'Orient',
-                'Quick',
-                'Ray',
-                'Sompo',
-                'Türk Nippon',
-                'Türkiye',
-                'Unico',
-                'Zurich',
-                // Duplicate for seamless loop
-                'Allianz',
-                'Aksigorta',
-                'Anadolu',
-                'Ankara',
-                'AXA',
-                'Bereket',
-                'Corpus',
-                'Doğa',
-                'EMAA',
-                'Generali',
-              ].map((company, index) => (
+              {marqueePartners.map((partner, index) => (
                 <div
-                  key={`${company}-${index}`}
-                  className="flex-shrink-0 h-16 w-32 bg-white rounded-lg border border-border flex items-center justify-center px-4 hover:border-primary/50 transition-colors"
+                  key={`${partner.name}-${index}`}
+                  className="flex-shrink-0 h-24 w-40 bg-white rounded-lg border border-border flex flex-col items-center justify-center px-4 py-3 hover:border-primary/50 transition-colors"
                 >
-                  <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">
-                    {company}
+                  <Image
+                    src={partner.logo}
+                    alt={partner.name}
+                    width={100}
+                    height={40}
+                    className="h-10 w-auto object-contain"
+                  />
+                  <span className="mt-2 text-xs font-medium text-muted-foreground text-center whitespace-nowrap">
+                    {partner.name}
                   </span>
                 </div>
               ))}
