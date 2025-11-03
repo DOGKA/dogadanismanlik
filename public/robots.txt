@@ -1,0 +1,10 @@
+# *
+User-agent: *
+Allow: /
+Disallow: /api/
+
+# Host
+Host: https://dogadanismanlik.com.tr
+
+# Sitemaps
+Sitemap: https://dogadanismanlik.com.tr/sitemap.xml
